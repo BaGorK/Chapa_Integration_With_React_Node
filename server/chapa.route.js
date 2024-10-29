@@ -4,14 +4,17 @@ const axios = require('axios');
 const chapaRouter = express.Router();
 
 chapaRouter.post('/accept-payment', async (req, res) => {
+  const { amount, email, first_name, last_name, phone_number, currency } =
+    req.body;
+
   const tx_ref = 'tx_EdmealemKassahun' + Date.now();
   const body = {
-    amount: 120,
-    currency: 'ETB',
-    email: 'abebech_bekele@gmail.com',
-    first_name: 'Edmealem',
-    last_name: 'Kassahun',
-    phone_number: '0912345678',
+    amount,
+    currency,
+    email,
+    first_name,
+    last_name,
+    phone_number,
     tx_ref,
     return_url: `http://localhost:5173/payment-verify?tx_ref=${tx_ref}`,
   };

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function PaymentVerify() {
   const [isLoading, setIsLoading] = useState(false);
+  const [paymentData, setPaymentData] = useState({});
 
   const [searchParams, setSearchParams] = useSearchParams();
   const tx_ref = searchParams.get('tx_ref');
@@ -11,23 +12,44 @@ function PaymentVerify() {
   useEffect(() => {
     async function verifyPayment() {
       setIsLoading(true);
+      if (!tx_ref) return setIsLoading(false);
+
       const res = await axios.post('http://localhost:5000/verify-payment', {
         tx_ref,
       });
       setIsLoading(false);
-      console.log(res.data);
+      const { data } = res.data;
+      setPaymentData(data);
     }
     verifyPayment();
   }, []);
 
-  if (!isLoading) return <Navigate to='/payment_success' replace={true} />;
+  const { amount, currency, email, first_name, last_name, phone_number } =
+    paymentData;
 
   return (
     <div>
       {isLoading ? (
-        <div>Verifying Payment...</div>
+        <div className='h-screen flex items-center justify-center '>
+          <span className='font-mono font-extrabold text-lg'>
+            Verifying Payment...
+          </span>
+        </div>
       ) : (
-        <div>Payment success full</div>
+        <div className='h-screen flex flex-col items-center justify-center '>
+          <h3 className='font-mono font-extrabold text-lg'>
+            Payment success full
+          </h3>
+          <div className='p-3  w-[300px] my-5 from-slate-300 bg-gradient-to-b to-transparent' />
+          <div>
+            <p>amount: {amount}</p>
+            <p>currency: {currency}</p>
+            <p>email: {email}</p>
+            <p>first-name: {first_name}</p>
+            <p>last-name: {last_name}</p>
+            <p>phone_number: {phone_number}</p>
+          </div>
+        </div>
       )}
     </div>
   );
