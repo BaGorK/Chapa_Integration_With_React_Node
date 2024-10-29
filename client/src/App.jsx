@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from './constant';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +23,7 @@ function App() {
     try {
       setIsLoading(true);
 
-      const res = await axios.post('http://localhost:5000/accept-payment', {
+      const res = await axios.post(`${BASE_URL}/accept-payment`, {
         amount: form.amount,
         currency: form.currency,
         email: form.email,

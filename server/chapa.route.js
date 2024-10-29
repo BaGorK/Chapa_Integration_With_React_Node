@@ -16,7 +16,7 @@ chapaRouter.post('/accept-payment', async (req, res) => {
     last_name,
     phone_number,
     tx_ref,
-    return_url: `http://localhost:5173/payment-verify?tx_ref=${tx_ref}`,
+    return_url: `/payment-verify?tx_ref=${tx_ref}`,
   };
 
   try {

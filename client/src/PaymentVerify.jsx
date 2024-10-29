@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
+import { BASE_URL } from './constant';
 
 function PaymentVerify() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ function PaymentVerify() {
       setIsLoading(true);
       if (!tx_ref) return setIsLoading(false);
 
-      const res = await axios.post('http://localhost:5000/verify-payment', {
+      const res = await axios.post(`${BASE_URL}/verify-payment`, {
         tx_ref,
       });
       setIsLoading(false);
