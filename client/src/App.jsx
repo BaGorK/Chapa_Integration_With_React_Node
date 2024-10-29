@@ -14,8 +14,7 @@ function App() {
       const { data } = res.data;
 
       const url = data.checkout_url;
-      console.log(url);
-      // window.location.href = url;
+      window.location.href = url;
     } catch (error) {
       console.log('Error', error);
     }
